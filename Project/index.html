@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<div class="progress-bar"></div>
+
 <div class="top-bar">
     Free Shipping | Premium Access | New Releases Every Week
 </div>
@@ -17,276 +19,203 @@
     <div class="logo">BookVerse</div>
 
     <div class="search-box">
-        <input type="text" placeholder="Search books, authors...">
+        <input type="text" id="global-search" placeholder="Search books, authors...">
     </div>
 
     <div class="nav-icons">
-        <i class="fa-solid fa-heart"></i>
-        <i class="fa-solid fa-cart-shopping"></i>
-        <i class="fa-solid fa-user"></i>
-        <i class="fa-solid fa-moon"></i>
+        <i class="fa-solid fa-heart" id="wishlist-btn"></i>
+        <i class="fa-solid fa-cart-shopping" id="cart-btn"></i>
+        <i class="fa-solid fa-user" id="auth-btn"></i>
+        <i class="fa-solid fa-moon" id="theme-btn"></i>
     </div>
 </nav>
 
-<section class="hero">
-    <div class="hero-left">
-        <h1>Discover Books You'll Love</h1>
-        <p>Thousands of books in one premium platform</p>
-        <button>Explore Now</button>
-    </div>
-
-    <div class="hero-right">
-        <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da">
-    </div>
-</section>
-
-<section class="categories">
-    <h2>Categories</h2>
-
-    <div class="category-grid">
-        <div>Fantasy</div>
-        <div>Romance</div>
-        <div>Business</div>
-        <div>Psychology</div>
-        <div>History</div>
-        <div>Horror</div>
-        <div>Sci-Fi</div>
-        <div>Biography</div>
-    </div>
-</section>
-
-<section class="featured">
-    <h2>Featured Books</h2>
-
-    <div class="book-grid">
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/10523338-L.jpg">
-            <h3>Harry Potter</h3>
+<main>
+    <section class="hero">
+        <div class="hero-left">
+            <h1>Discover Books You'll Love</h1>
+            <p>Thousands of books in one premium platform</p>
+            <div class="hero-buttons">
+                <button class="btn-primary">Explore Now</button>
+                <button class="btn-secondary" id="open-add-book-modal"><i class="fa-solid fa-plus"></i> Add New Book</button>
+            </div>
         </div>
 
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/11153224-L.jpg">
-            <h3>The Hobbit</h3>
+        <div class="hero-right">
+            <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da" alt="Library books">
         </div>
+    </section>
 
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/12606557-L.jpg">
-            <h3>Dune</h3>
+    <section class="categories">
+        <h2>Categories</h2>
+        <div class="category-grid">
+            <div data-category="Fantasy">Fantasy</div>
+            <div data-category="Romance">Romance</div>
+            <div data-category="Business">Business</div>
+            <div data-category="Psychology">Psychology</div>
+            <div data-category="History">History</div>
+            <div data-category="Horror">Horror</div>
+            <div data-category="Sci-Fi">Sci-Fi</div>
+            <div data-category="Biography">Biography</div>
         </div>
+    </section>
 
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/8231856-L.jpg">
-            <h3>1984</h3>
+    <section class="featured">
+        <h2>Featured Books</h2>
+        <div class="book-grid" id="featured-books-grid"></div>
+    </section>
+
+    <section class="bestsellers">
+        <h2>Bestsellers</h2>
+        <div class="book-grid" id="bestsellers-books-grid"></div>
+    </section>
+
+    <section class="new-releases">
+        <h2>New Releases</h2>
+        <div class="book-grid" id="new-releases-grid"></div>
+    </section>
+
+    <section class="flash-sale">
+        <h2>Flash Sale</h2>
+        <div class="sale-banner">
+            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794" alt="Books on sale">
+            <div>
+                <h3>50% Off Selected Books</h3>
+                <p>Limited time offer</p>
+                <button>Shop Now</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="bestsellers">
-    <h2>Bestsellers</h2>
+    <section class="authors">
+        <h2>Popular Authors</h2>
+        <div class="author-grid" id="authors-grid"></div>
+    </section>
 
-    <div class="book-grid">
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/240726-L.jpg">
-            <h3>Atomic Habits</h3>
+    <section class="reviews">
+        <h2>Reviews</h2>
+        <div class="review-grid">
+            <div class="review-card">
+                <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Amazing platform. Found all the classical literature I needed for my studies."</p>
+                <h4>Anna</h4>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                <p>"Best bookstore online. Fast support, great dark mode design layout."</p>
+                <h4>Michael</h4>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Beautiful design and smooth loading animations. Love the reading challenges."</p>
+                <h4>Kate</h4>
+            </div>
         </div>
+    </section>
 
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/5546156-L.jpg">
-            <h3>Rich Dad Poor Dad</h3>
-        </div>
+    <section class="reading-challenge">
+        <h2>Reading Challenge</h2>
+        <p>Read 50 books this year and earn rewards</p>
+        <button>Join Challenge</button>
+    </section>
 
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/7884866-L.jpg">
-            <h3>It Ends With Us</h3>
-        </div>
-    </div>
-</section>
-
-<section class="new-releases">
-    <h2>New Releases</h2>
-
-    <div class="book-grid">
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/240727-L.jpg">
-            <h3>New Book 1</h3>
-        </div>
-
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/240728-L.jpg">
-            <h3>New Book 2</h3>
-        </div>
-
-        <div class="book-card">
-            <img src="https://covers.openlibrary.org/b/id/240729-L.jpg">
-            <h3>New Book 3</h3>
-        </div>
-    </div>
-</section>
-
-<section class="flash-sale">
-    <h2>Flash Sale</h2>
-
-    <div class="sale-banner">
-        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794">
-
+    <section class="mobile-app">
         <div>
-            <h3>50% Off Selected Books</h3>
-            <p>Limited time offer</p>
-            <button>Shop Now</button>
+            <h2>Read Anywhere</h2>
+            <p>Download our app</p>
         </div>
-    </div>
-</section>
+        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c" alt="Mobile app interface">
+    </section>
 
-<section class="authors">
-    <h2>Popular Authors</h2>
+    <section class="premium">
+        <h2>Premium Membership</h2>
+        <p>Unlimited books access</p>
+        <button>Join Premium</button>
+    </section>
 
-    <div class="author-grid">
+    <section class="blog">
+        <h2>Latest Articles</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d" alt="Stack of books">
+                <h3>Best Books of 2026</h3>
+            </div>
 
-        <div class="author-card">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e">
-            <h3>George Orwell</h3>
+            <div class="blog-card">
+                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66" alt="Person reading a book">
+                <h3>Reading Tips</h3>
+            </div>
+
+            <div class="blog-card">
+                <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353" alt="Open book magic glow">
+                <h3>Fantasy Books</h3>
+            </div>
         </div>
+    </section>
 
-        <div class="author-card">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330">
-            <h3>J.K Rowling</h3>
+    <section class="partners">
+        <h2>Our Partners</h2>
+        <div class="partner-grid">
+            <div>Penguin</div>
+            <div>Oxford</div>
+            <div>Amazon Books</div>
+            <div>HarperCollins</div>
         </div>
+    </section>
 
-        <div class="author-card">
-            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d">
-            <h3>Tolkien</h3>
+    <section class="gift-cards">
+        <h2>Gift Cards</h2>
+        <div class="gift-container">
+            <img src="https://images.unsplash.com/photo-1512909006721-3d6018887383" alt="Gift envelope">
+            <div>
+                <h3>Perfect Gift For Readers</h3>
+                <button>Buy Gift Card</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="reviews">
-    <h2>Reviews</h2>
-
-    <div class="review-grid">
-        <div class="review-card">
-            <p>Amazing platform</p>
-            <h4>Anna</h4>
-        </div>
-
-        <div class="review-card">
-            <p>Best bookstore online</p>
-            <h4>Michael</h4>
-        </div>
-
-        <div class="review-card">
-            <p>Beautiful design</p>
-            <h4>Kate</h4>
-        </div>
-    </div>
-</section>
-
-<section class="reading-challenge">
-    <h2>Reading Challenge</h2>
-    <p>Read 50 books this year and earn rewards</p>
-    <button>Join Challenge</button>
-</section>
-
-<section class="mobile-app">
-    <div>
-        <h2>Read Anywhere</h2>
-        <p>Download our app</p>
-    </div>
-
-    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c">
-</section>
-
-<section class="premium">
-    <h2>Premium Membership</h2>
-    <p>Unlimited books access</p>
-    <button>Join Premium</button>
-</section>
-
-<section class="blog">
-    <h2>Latest Articles</h2>
-
-    <div class="blog-grid">
-        <div class="blog-card">
-            <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d">
-            <h3>Best Books of 2026</h3>
+    <section class="stats">
+        <div class="stat-card">
+            <h2>50K+</h2>
+            <p>Books</p>
         </div>
 
-        <div class="blog-card">
-            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66">
-            <h3>Reading Tips</h3>
+        <div class="stat-card">
+            <h2>20K+</h2>
+            <p>Users</p>
         </div>
 
-        <div class="blog-card">
-            <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353">
-            <h3>Fantasy Books</h3>
+        <div class="stat-card">
+            <h2>5K+</h2>
+            <p>Authors</p>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="partners">
-    <h2>Our Partners</h2>
+    <section class="faq">
+        <h2>FAQ</h2>
+        <div class="faq-item">How premium works?</div>
+        <div class="faq-item">Can I buy physical books?</div>
+        <div class="faq-item">Refund policy</div>
+    </section>
 
-    <div class="partner-grid">
-        <div>Penguin</div>
-        <div>Oxford</div>
-        <div>Amazon Books</div>
-        <div>HarperCollins</div>
-    </div>
-</section>
+    <section class="newsletter">
+        <h2>Stay Updated</h2>
+        <input type="email" placeholder="Enter email">
+        <button>Subscribe</button>
+    </section>
 
-<section class="gift-cards">
-    <h2>Gift Cards</h2>
-
-    <div class="gift-container">
-        <img src="https://images.unsplash.com/photo-1512909006721-3d6018887383">
-
-        <div>
-            <h3>Perfect Gift For Readers</h3>
-            <button>Buy Gift Card</button>
+    <section class="socials">
+        <h2>Follow Us</h2>
+        <div class="social-icons">
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-tiktok"></i>
+            <i class="fa-brands fa-youtube"></i>
         </div>
-    </div>
-</section>
-
-<section class="stats">
-    <div class="stat-card">
-        <h2>50K+</h2>
-        <p>Books</p>
-    </div>
-
-    <div class="stat-card">
-        <h2>20K+</h2>
-        <p>Users</p>
-    </div>
-
-    <div class="stat-card">
-        <h2>5K+</h2>
-        <p>Authors</p>
-    </div>
-</section>
-
-<section class="faq">
-    <h2>FAQ</h2>
-
-    <div class="faq-item">How premium works?</div>
-    <div class="faq-item">Can I buy physical books?</div>
-    <div class="faq-item">Refund policy</div>
-</section>
-
-<section class="newsletter">
-    <h2>Stay Updated</h2>
-    <input type="email" placeholder="Enter email">
-    <button>Subscribe</button>
-</section>
-
-<section class="socials">
-    <h2>Follow Us</h2>
-
-    <div class="social-icons">
-        <i class="fa-brands fa-instagram"></i>
-        <i class="fa-brands fa-facebook"></i>
-        <i class="fa-brands fa-tiktok"></i>
-        <i class="fa-brands fa-youtube"></i>
-    </div>
-</section>
+    </section>
+</main>
 
 <footer>
     <div>
@@ -313,11 +242,92 @@
     </div>
 </footer>
 
-<script src="script.js"></script>
-<div class="progress-bar"></div>
-
 <div class="chat-btn">
     <i class="fa-solid fa-message"></i>
 </div>
+
+<div class="modal" id="add-book-modal">
+    <div class="modal-content">
+        <span class="close-modal" id="close-add-modal">&times;</span>
+        <h3>Add New Book Details</h3>
+        <form id="add-book-form">
+            <input type="text" id="new-title" placeholder="Book Title" required>
+            <input type="text" id="new-author" placeholder="Author Name" required>
+            <input type="text" id="new-image" placeholder="Image URL (or leave empty)">
+            <select id="new-category">
+                <option value="Fantasy">Fantasy</option>
+                <option value="Romance">Romance</option>
+                <option value="Business">Business</option>
+                <option value="Psychology">Psychology</option>
+                <option value="History">History</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+            </select>
+            <textarea id="new-description" placeholder="Write book synopsis..." rows="4" required></textarea>
+            <button type="submit">Save Book Entry</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="details-book-modal">
+    <div class="modal-content modal-details">
+        <span class="close-modal" id="close-details-modal">&times;</span>
+        <div class="details-layout">
+            <div class="details-img-container">
+                <img id="modal-view-img" src="" alt="Book Cover">
+            </div>
+            <div class="details-info-container">
+                <h2 id="modal-view-title">Book Title</h2>
+                <h4 id="modal-view-author">By Author</h4>
+                <div class="book-rating-interactive">
+                    <span class="badge" id="modal-view-category">Category</span>
+                    <span class="stars-static"><i class="fa-solid fa-star"></i> 4.8</span>
+                </div>
+                <hr class="modal-divider">
+                <p id="modal-view-description">Description text...</p>
+                <div class="forum-preview">
+                    <h5>Discussion & Comments (3)</h5>
+                    <div class="comment-item"><strong>User12:</strong> Best ending ever! Highly recommend.</div>
+                    <div class="comment-item"><strong>ReadMaster:</strong> A bit slow in the middle, but great.</div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-primary" onclick="alert('Book borrowed successfully!')"><i class="fa-solid fa-cart-shopping"></i> Borrow / Buy</button>
+                    <button class="btn-danger" id="delete-book-btn"><i class="fa-solid fa-trash"></i> Delete Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="author-modal">
+    <div class="modal-content">
+        <span class="close-modal" id="close-author-modal">&times;</span>
+        <div class="author-modal-layout">
+            <img id="author-modal-img" src="" alt="Author">
+            <h3 id="author-modal-name">Author Name</h3>
+            <p id="author-modal-bio">Biography text...</p>
+            <h5>Books by this author:</h5>
+            <ul id="author-books-list"></ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="auth-panel-modal">
+    <div class="modal-content modal-auth">
+        <span class="close-modal" id="close-auth-modal">&times;</span>
+        <h3>Welcome to BookVerse</h3>
+        <p class="auth-sub">Select your account access type</p>
+        <div class="auth-role-select">
+            <button class="role-btn active" data-role="user"><i class="fa-solid fa-user"></i> Regular User</button>
+            <button class="role-btn" data-role="admin"><i class="fa-solid fa-user-shield"></i> Administrator</button>
+        </div>
+        <form id="auth-form" onsubmit="event.preventDefault(); alert('Authentication success!'); document.getElementById('auth-panel-modal').classList.remove('active');">
+            <input type="email" placeholder="Email Address" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Sign In / Register</button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

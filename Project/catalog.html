@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookVerse - Catalog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="index.html" style="color:white; text-decoration:none;">BookVerse</a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="catalog.html" class="active">Catalog</a></li>
+            <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <section class="catalog-section" style="padding: 120px 8% 60px 8%;">
+        <h2 class="section-title">Explore <span>All Books</span></h2>
+
+        <div class="catalog-controls" style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;">
+            <input type="text" id="catalog-search" placeholder="Search by title or author..." style="flex: 2; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 10px; min-width: 250px;">
+            
+            <select id="catalog-filter-category" style="flex: 1; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 10px; min-width: 150px;">
+                <option value="all">All Categories</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="History">History</option>
+                <option value="Business">Business</option>
+                <option value="Romance">Romance</option>
+                <option value="Psychology">Psychology</option>
+            </select>
+
+            <select id="catalog-sort" style="flex: 1; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 10px; min-width: 150px;">
+                <option value="default">Default Sorting</option>
+                <option value="az">Alphabetical (A-Z)</option>
+                <option value="za">Alphabetical (Z-A)</option>
+            </select>
+        </div>
+
+        <div id="catalog-grid" class="books-grid"></div>
+    </section>
+
+    <div id="details-book-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-details-modal" class="close-btn">&times;</span>
+            <div class="modal-flex" style="display: flex; gap: 30px; margin-top: 20px;">
+                <img id="modal-view-img" src="" alt="" style="width: 200px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
+                <div>
+                    <h2 id="modal-view-title" style="color:#a855f7; margin-bottom: 5px;"></h2>
+                    <p id="modal-view-author" style="color:#aaa; font-style: italic; margin-bottom: 15px;"></p>
+                    <span id="modal-view-category" style="background: rgba(168,85,247,0.2); color:#a855f7; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;"></span>
+                    <p id="modal-view-description" style="margin-top: 20px; line-height: 1.6; color:#ddd;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const catalogGrid = document.getElementById("catalog-grid");
+        const catSearch = document.getElementById("catalog-search");
+        const catFilter = document.getElementById("catalog-filter-category");
+        const catSort = document.getElementById("catalog-sort");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const catParam = urlParams.get('category');
+        if(catParam) {
+            catFilter.value = catParam;
+        }
+
+        function renderCatalog() {
+            catalogGrid.innerHTML = "";
+            let currentData = [...booksDatabase];
+
+            const query = catSearch.value.toLowerCase().trim();
+            if(query) {
+                currentData = currentData.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
+            }
+
+            const category = catFilter.value;
+            if(category !== "all") {
+                currentData = currentData.filter(b => b.category === category);
+            }
+
+            const sortOrder = catSort.value;
+            if(sortOrder === "az") {
+                currentData.sort((a,b) => a.title.localeCompare(b.title));
+            } else if(sortOrder === "za") {
+                currentData.sort((a,b) => b.title.localeCompare(a.title));
+            }
+
+            if(currentData.length === 0) {
+                catalogGrid.innerHTML = `<p style="color: #666; font-size: 18px; grid-column: 1/-1; text-align: center;">No books found matching your criteria.</p>`;
+                return;
+            }
+
+            currentData.forEach(book => {
+                const card = document.createElement("div");
+                card.className = "book-card";
+                card.innerHTML = `
+                    <img src="${book.img}" alt="${book.title}">
+                    <h3>${book.title}</h3>
+                    <p>By ${book.author}</p>
+                `;
+                card.addEventListener("click", () => openDetailsModal(book.id));
+                catalogGrid.appendChild(card);
+            });
+        }
+
+        catSearch.addEventListener("input", renderCatalog);
+        catFilter.addEventListener("change", renderCatalog);
+        catSort.addEventListener("change", renderCatalog);
+
+        document.addEventListener("DOMContentLoaded", renderCatalog);
+    </script>
+</body>
+</html>

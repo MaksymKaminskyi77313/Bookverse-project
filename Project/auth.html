@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookVerse - Join Us</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="auth-page-body">
+
+<div class="auth-back-btn">
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+</div>
+
+<div class="auth-container">
+    <div class="auth-box-left">
+        <h2>Welcome Back, Reader!</h2>
+        <p>Discover thousands of digital books, track your reading progress, and join worldwide discussions inside BookVerse.</p>
+        <div class="auth-decor-circle"></div>
+    </div>
+
+    <div class="auth-box-right">
+        <div class="logo auth-logo-center">BookVerse</div>
+        
+        <div class="auth-tabs">
+            <button class="auth-tab-btn active" id="tab-login">Sign In</button>
+            <button class="auth-tab-btn" id="tab-register">Sign Up</button>
+        </div>
+
+        <form id="page-login-form" class="auth-page-form active">
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Password" required>
+            </div>
+            <div class="auth-options">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#" onclick="alert('Password reset link sent to your email!')">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn-primary auth-submit-btn">Let's Read</button>
+        </form>
+
+        <form id="page-register-form" class="auth-page-form">
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Create Password" required>
+            </div>
+            
+            <div class="admin-checkbox-panel">
+                <label class="admin-switch">
+                    <input type="checkbox" id="register-as-admin">
+                    <span class="slider"></span>
+                </label>
+                <span class="admin-label-text">Request Administrator Access</span>
+            </div>
+
+            <button type="submit" class="btn-primary auth-submit-btn">Create Account</button>
+        </form>
+
+        <div class="social-auth-separator"><span>or connect with</span></div>
+        
+        <div class="social-login-buttons">
+            <button onclick="alert('Google Auth integration coming later!')"><i class="fa-brands fa-google"></i> Google</button>
+            <button onclick="alert('Apple Auth integration coming later!')"><i class="fa-brands fa-apple"></i> Apple</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Логіка перемикання табів (Вхід / Реєстрація)
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const loginForm = document.getElementById('page-login-form');
+    const registerForm = document.getElementById('page-register-form');
+
+    tabLogin.addEventListener('click', () => {
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+        loginForm.classList.add('active');
+        registerForm.classList.remove('active');
+    });
+
+    tabRegister.addEventListener('click', () => {
+        tabRegister.classList.add('active');
+        tabLogin.classList.remove('active');
+        registerForm.classList.add('active');
+        loginForm.classList.remove('active');
+    });
+
+    // Обробка відправки форм
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Successfully logged into BookVerse!');
+        window.location.href = 'index.html'; // повернення на головну
+    });
+
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const isAdmin = document.getElementById('register-as-admin').checked;
+        if(isAdmin) {
+            alert('Registration complete! Admin rights requested for validation.');
+        } else {
+            alert('Account created successfully! Welcome to BookVerse.');
+        }
+        window.location.href = 'index.html';
+    });
+</script>
+</body>
+</html>
