@@ -24,9 +24,8 @@
             background: #1a1a1a;
             color: #a855f7;
         }
-        .admin-table tr:hover {
-            background: #161616;
-        }
+        .admin-table tr:hover { background: #161616; }
+
         .action-btn-delete {
             background: #ef4444;
             color: white;
@@ -36,8 +35,25 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        .action-btn-delete:hover {
-            background: #dc2626;
+        .action-btn-delete:hover { background: #dc2626; }
+
+        .action-btn-edit {
+            background: #a855f7;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 6px;
+            transition: 0.3s;
+        }
+        .action-btn-edit:hover { background: #9333ea; }
+
+        #admin-status {
+            color: #a855f7;
+            margin-top: 10px;
+            font-size: 14px;
+            min-height: 20px;
         }
     </style>
 </head>
@@ -53,10 +69,11 @@
     </nav>
 
     <section class="admin-section" style="padding: 120px 8% 60px 8%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
             <h2 class="section-title" style="margin: 0;">Database <span>Management</span></h2>
             <button id="open-add-book-modal" class="btn-primary">+ Add New Book</button>
         </div>
+        <p id="admin-status">Loading books from database...</p>
 
         <table class="admin-table">
             <thead>
@@ -65,14 +82,15 @@
                     <th>Title</th>
                     <th>Author</th>
                     <th>Category</th>
+                    <th>Type</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="admin-database-table">
-            </tbody>
+            <tbody id="admin-database-table"></tbody>
         </table>
     </section>
 
+    <!-- Add Book Modal -->
     <div id="add-book-modal" class="modal">
         <div class="modal-content">
             <span id="close-add-modal" class="close-btn">&times;</span>
@@ -80,8 +98,7 @@
             <form id="add-book-form" style="margin-top: 20px;">
                 <input type="text" id="new-title" placeholder="Book Title" required style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
                 <input type="text" id="new-author" placeholder="Author" required style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
-                <input type="url" id="new-image" placeholder="Image URL (Optional)" style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
-                
+                <input type="text" id="new-image" placeholder="Image URL (Optional)" style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
                 <select id="new-category" style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
                     <option value="Fantasy">Fantasy</option>
                     <option value="Sci-Fi">Sci-Fi</option>
@@ -90,9 +107,41 @@
                     <option value="Romance">Romance</option>
                     <option value="Psychology">Psychology</option>
                 </select>
-
+                <select id="new-type" style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
+                    <option value="new">New Release</option>
+                    <option value="featured">Featured</option>
+                    <option value="bestseller">Bestseller</option>
+                </select>
                 <textarea id="new-description" placeholder="Short Book Description..." rows="4" required style="width:100%; padding:12px; margin-bottom:20px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px; resize:none;"></textarea>
                 <button type="submit" class="btn-primary" style="width: 100%;">Upload to System</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-book-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-edit-modal" class="close-btn">&times;</span>
+            <h2>Edit <span>Book</span></h2>
+            <form id="edit-book-form" style="margin-top: 20px;">
+                <input type="hidden" id="edit-id">
+                <input type="text" id="edit-title" placeholder="Book Title" required style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
+                <input type="text" id="edit-author" placeholder="Author" required style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
+                <input type="text" id="edit-image" placeholder="Image URL" style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
+                <select id="edit-category" style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="History">History</option>
+                    <option value="Business">Business</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Psychology">Psychology</option>
+                </select>
+                <select id="edit-type" style="width:100%; padding:12px; margin-bottom:15px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px;">
+                    <option value="new">New Release</option>
+                    <option value="featured">Featured</option>
+                    <option value="bestseller">Bestseller</option>
+                </select>
+                <textarea id="edit-description" placeholder="Description..." rows="4" required style="width:100%; padding:12px; margin-bottom:20px; background:#1f1f1f; border:1px solid #333; color:white; border-radius:8px; resize:none;"></textarea>
+                <button type="submit" class="btn-primary" style="width: 100%;">Save Changes</button>
             </form>
         </div>
     </div>
@@ -100,41 +149,133 @@
     <script src="script.js"></script>
     <script>
         const tableBody = document.getElementById("admin-database-table");
+        const statusEl  = document.getElementById("admin-status");
 
         function renderAdminTable() {
             tableBody.innerHTML = "";
-            
+            statusEl.innerText  = `${booksDatabase.length} book(s) in database`;
+
             booksDatabase.forEach(book => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                    <td><img src="${book.img}" alt="" style="width: 40px; height: 60px; object-fit: cover; border-radius: 4px;"></td>
-                    <td style="font-weight: bold; color: white;">${book.title}</td>
+                    <td><img src="${book.image || book.img || ''}" alt="" style="width:40px; height:60px; object-fit:cover; border-radius:4px;"></td>
+                    <td style="font-weight:bold; color:white;">${book.title}</td>
                     <td>${book.author}</td>
-                    <td><span style="background: rgba(168,85,247,0.1); color: #a855f7; padding: 4px 10px; border-radius: 12px; font-size: 13px;">${book.category}</span></td>
-                    <td><button class="action-btn-delete" onclick="deleteBookFromAdmin(${book.id})"><i class="fa-solid fa-trash"></i></button></td>
+                    <td><span style="background:rgba(168,85,247,0.1); color:#a855f7; padding:4px 10px; border-radius:12px; font-size:13px;">${book.category}</span></td>
+                    <td><span style="color:#aaa; font-size:13px;">${book.type || 'new'}</span></td>
+                    <td>
+                        <button class="action-btn-edit"   onclick="openEditModal(${book.id})"><i class="fa-solid fa-pen"></i></button>
+                        <button class="action-btn-delete" onclick="deleteBookAdmin(${book.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
                 `;
                 tableBody.appendChild(row);
             });
         }
 
-        function deleteBookFromAdmin(id) {
-            if(confirm("Are you sure you want to delete this book?")) {
+        async function deleteBookAdmin(id) {
+            if (!confirm("Delete this book?")) return;
+            try {
+                await fetch(`${API_URL}/${id}`, { method: "DELETE" });
                 booksDatabase = booksDatabase.filter(b => b.id !== id);
-                saveToStorage();
                 renderAdminTable();
+            } catch (err) {
+                alert("Delete failed: " + err.message);
             }
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            renderAdminTable();
-            
-            const form = document.getElementById("add-book-form");
-            if(form) {
-                form.addEventListener("submit", () => {
-                    setTimeout(renderAdminTable, 100);
+        function openEditModal(id) {
+            const book = booksDatabase.find(b => b.id === id);
+            if (!book) return;
+
+            document.getElementById("edit-id").value          = book.id;
+            document.getElementById("edit-title").value       = book.title;
+            document.getElementById("edit-author").value      = book.author;
+            document.getElementById("edit-image").value       = book.image || book.img || "";
+            document.getElementById("edit-category").value    = book.category;
+            document.getElementById("edit-type").value        = book.type || "new";
+            document.getElementById("edit-description").value = book.description || "";
+
+            document.getElementById("edit-book-modal").classList.add("active");
+        }
+
+        document.getElementById("close-edit-modal").addEventListener("click", () => {
+            document.getElementById("edit-book-modal").classList.remove("active");
+        });
+
+        document.getElementById("edit-book-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const id = document.getElementById("edit-id").value;
+            const updatedBook = {
+                title:       document.getElementById("edit-title").value,
+                author:      document.getElementById("edit-author").value,
+                image:       document.getElementById("edit-image").value,
+                category:    document.getElementById("edit-category").value,
+                type:        document.getElementById("edit-type").value,
+                description: document.getElementById("edit-description").value
+            };
+
+            try {
+                const res = await fetch(`${API_URL}/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(updatedBook)
                 });
+                const saved = await res.json();
+                const index = booksDatabase.findIndex(b => b.id == id);
+                if (index !== -1) booksDatabase[index] = saved;
+                document.getElementById("edit-book-modal").classList.remove("active");
+                renderAdminTable();
+            } catch (err) {
+                alert("Update failed: " + err.message);
             }
         });
+
+        document.getElementById("open-add-book-modal").addEventListener("click", () => {
+            document.getElementById("add-book-modal").classList.add("active");
+        });
+        document.getElementById("close-add-modal").addEventListener("click", () => {
+            document.getElementById("add-book-modal").classList.remove("active");
+        });
+
+        document.getElementById("add-book-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const bookData = {
+                title:       document.getElementById("new-title").value,
+                author:      document.getElementById("new-author").value,
+                image:       document.getElementById("new-image").value.trim() || "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+                category:    document.getElementById("new-category").value,
+                type:        document.getElementById("new-type").value,
+                description: document.getElementById("new-description").value
+            };
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(bookData)
+                });
+                const newBook = await res.json();
+                booksDatabase.unshift(newBook);
+                document.getElementById("add-book-modal").classList.remove("active");
+                this.reset();
+                renderAdminTable();
+            } catch (err) {
+                alert("Add failed: " + err.message);
+            }
+        });
+
+        async function initAdmin() {
+            try {
+                const res = await fetch(API_URL);
+                booksDatabase = await res.json();
+                renderAdminTable();
+            } catch (err) {
+                statusEl.innerText = "Could not connect to backend. Is Spring Boot running?";
+                statusEl.style.color = "#ef4444";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", initAdmin);
     </script>
 </body>
 </html>
