@@ -317,7 +317,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll("section").forEach(section => observer.observe(section));
-
+    const authBtn = document.getElementById("auth-btn");
+    if (authBtn) {
+    const currentUser = sessionStorage.getItem("currentUser");
+    if (currentUser) {
+        const user = JSON.parse(currentUser);
+        authBtn.title = `Logged in as ${user.fullName}`;
+        authBtn.style.color = "#a855f7";
+        authBtn.onclick = () => {
+            if (confirm(`Logged in as ${user.fullName}. Log out?`)) {
+                sessionStorage.removeItem("currentUser");
+                location.reload();
+            }
+        };
+        } else {
+        authBtn.addEventListener("click", () => {
+            window.location.href = "auth.html";
+        });
+        }
+    }
     const wishlistBtn = document.getElementById("wishlist-btn");
     if(wishlistBtn) wishlistBtn.onclick = () => alert("Wishlist system active! Book saved.");
 

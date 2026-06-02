@@ -79,12 +79,13 @@
 </div>
 
 <script>
-    // Логіка перемикання табів (Вхід / Реєстрація)
-    const tabLogin = document.getElementById('tab-login');
-    const tabRegister = document.getElementById('tab-register');
-    const loginForm = document.getElementById('page-login-form');
-    const registerForm = document.getElementById('page-register-form');
+    const AUTH_API = "http://localhost:8080/users";
 
+    const tabLogin    = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const loginForm   = document.getElementById('page-login-form');
+    const registerForm = document.getElementById('page-register-form');
+ 
     tabLogin.addEventListener('click', () => {
         tabLogin.classList.add('active');
         tabRegister.classList.remove('active');
@@ -98,24 +99,67 @@
         registerForm.classList.add('active');
         loginForm.classList.remove('active');
     });
-
-    // Обробка відправки форм
-    loginForm.addEventListener('submit', (e) => {
+ 
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        alert('Successfully logged into BookVerse!');
-        window.location.href = 'index.html'; // повернення на головну
-    });
+        const email    = loginForm.querySelector('input[type="email"]').value;
+        const password = loginForm.querySelector('input[type="password"]').value;
 
-    registerForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const isAdmin = document.getElementById('register-as-admin').checked;
-        if(isAdmin) {
-            alert('Registration complete! Admin rights requested for validation.');
-        } else {
-            alert('Account created successfully! Welcome to BookVerse.');
+        try {
+            const res  = await fetch(`${AUTH_API}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.error || "Login failed");
+                return;
+            }
+ 
+            sessionStorage.setItem("currentUser", JSON.stringify(data));
+            alert(`Welcome back, ${data.fullName}!`);
+            window.location.href = 'index.html';
+
+        } catch (err) {
+            alert("Could not connect to server.");
         }
-        window.location.href = 'index.html';
+    });
+ 
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fullName = registerForm.querySelector('input[type="text"]').value;
+        const email    = registerForm.querySelector('input[type="email"]').value;
+        const password = registerForm.querySelector('input[type="password"]').value;
+        const isAdmin  = document.getElementById('register-as-admin').checked;
+
+        try {
+            const res  = await fetch(`${AUTH_API}/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    password,
+                    role: isAdmin ? "admin" : "user"
+                })
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.error || "Registration failed");
+                return;
+            }
+
+            alert(`Account created! Welcome, ${data.fullName}!`);
+            window.location.href = 'index.html';
+
+        } catch (err) {
+            alert("Could not connect to server.");
+        }
     });
 </script>
+ 
 </body>
 </html>
