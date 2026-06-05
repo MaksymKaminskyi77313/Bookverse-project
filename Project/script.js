@@ -1,3 +1,5 @@
+const API_URL = "bookverse-project-production.up.railway.app";
+
 let defaultBooks = [
     { id: 1, title: "Harry Potter", author: "J.K Rowling", category: "Fantasy", img: "https://images.unsplash.com/photo-1618666012174-83b441c0bc76?q=80&w=600&auto=format&fit=crop", description: "A young wizard discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry.", type: "featured", reviews: [] },
     { id: 2, title: "The Hobbit", author: "Tolkien", category: "Fantasy", img: "https://images.unsplash.com/photo-1629992101753-56d196c8aabb?q=80&w=600&auto=format&fit=crop", description: "Bilbo Baggins is whisked away from his comfortable, unambitious life in Hobbiton by the wizard Gandalf and a company of dwarves on a quest to reclaim a lost treasure.", type: "featured", reviews: [] },
