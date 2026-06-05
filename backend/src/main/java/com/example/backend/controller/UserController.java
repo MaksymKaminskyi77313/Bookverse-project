@@ -17,7 +17,11 @@ import com.example.backend.repository.UserRepository;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500"})
+@CrossOrigin(origins = {
+    "https://bookverseproject-alpha.vercel.app",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"
+})
 public class UserController {
 
     private final UserRepository repository;
