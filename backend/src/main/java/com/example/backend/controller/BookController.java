@@ -21,7 +21,11 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/books")
-@CrossOrigin("*")
+@CrossOrigin(origins = {
+    "https://bookverseproject-alpha.vercel.app",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"
+})
 public class BookController {
 
     private final BookRepository repository;
