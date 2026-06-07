@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookVerse - Author</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">
+        <a href="index.html" style="text-decoration:none;color:inherit;">
+            BookVerse
+        </a>
+    </div>
+</nav>
+
+<section class="author-page">
+
+    <a href="index.html" class="author-back">
+        ← Back to Home
+    </a>
+
+    <div class="author-top">
+
+        <div class="author-photo-box">
+            <img id="author-photo" src="" alt="">
+        </div>
+
+        <div class="author-main-info">
+
+            <h1 id="author-name"></h1>
+
+            <h3 id="author-role"></h3>
+
+            <div class="author-cards">
+
+                <div class="author-card">
+                    <span>Years</span>
+                    <h2 id="author-years"></h2>
+                </div>
+
+                <div class="author-card">
+                    <span>Nationality</span>
+                    <h2 id="author-country"></h2>
+                </div>
+
+                <div class="author-card">
+                    <span>Genre</span>
+                    <h2 id="author-genre"></h2>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <section class="author-block">
+
+        <h2>Biography</h2>
+
+        <p id="author-biography"></p>
+
+    </section>
+
+    <section class="author-block">
+
+        <h2>Popular Books</h2>
+
+        <div class="books-grid-author">
+
+            <div class="book-author-item">
+                <h3 id="book-one"></h3>
+            </div>
+
+            <div class="book-author-item">
+                <h3 id="book-two"></h3>
+            </div>
+
+            <div class="book-author-item">
+                <h3 id="book-three"></h3>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="author-block">
+
+        <h2>Interesting Facts</h2>
+
+        <ul class="facts-list">
+
+            <li id="fact-one"></li>
+            <li id="fact-two"></li>
+            <li id="fact-three"></li>
+
+        </ul>
+
+    </section>
+
+    <section class="author-block">
+
+        <h2>Famous Quote</h2>
+
+        <div class="author-quote">
+            <p id="author-quote"></p>
+        </div>
+
+    </section>
+
+    <section class="author-block">
+
+        <h2>Reader Reviews</h2>
+
+        <div id="author-comments">
+
+        </div>
+
+    </section>
+
+    <section class="author-block">
+
+        <h2>Leave Your Review</h2>
+
+        <div class="author-form">
+
+            <input
+            id="comment-name"
+            type="text"
+            placeholder="Your Name">
+
+            <select id="comment-rating">
+                <option value="5">★★★★★</option>
+                <option value="4">★★★★☆</option>
+                <option value="3">★★★☆☆</option>
+                <option value="2">★★☆☆☆</option>
+                <option value="1">★☆☆☆☆</option>
+            </select>
+
+            <textarea
+            id="comment-text"
+            rows="6"
+            placeholder="Write your opinion about this author...">
+            </textarea>
+
+            <button
+            id="add-author-comment"
+            class="btn-primary">
+                Post Review
+            </button>
+
+        </div>
+
+    </section>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+

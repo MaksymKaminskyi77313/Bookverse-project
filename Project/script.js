@@ -361,3 +361,375 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatBtn = document.querySelector(".chat-btn");
     if (chatBtn) chatBtn.onclick = () => alert("Support interface connecting...");
 });
+
+document.querySelectorAll(".faq-item").forEach(item => {
+    item.addEventListener("click", () => {
+        const answer = item.querySelector(".faq-answer");
+
+        if (answer.style.display === "block") {
+            answer.style.display = "none";
+        } else {
+            answer.style.display = "block";
+        }
+    });
+});
+
+
+const authorElement = document.getElementById("author-name");
+
+if(authorElement){
+
+const authors={
+
+"George Orwell":{
+
+photo:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+
+role:"English novelist, essayist, journalist and literary critic",
+
+years:"1903 - 1950",
+
+country:"United Kingdom",
+
+genre:"Dystopian Fiction, Political Satire, Social Criticism",
+
+biography:`George Orwell, whose real name was Eric Arthur Blair, was born on 25 June 1903 in Motihari, British India. Although he was born overseas, he grew up mainly in England and from an early age showed a deep interest in literature and language. Orwell attended Eton College, one of the most prestigious schools in Britain, where he developed his writing abilities. Instead of going directly to university, he joined the Indian Imperial Police in Burma, an experience that changed his view of colonialism and political power.
+
+After several years in Burma, Orwell resigned and decided to become a writer. He lived among poor communities in London and Paris to better understand social inequality. These experiences became the basis for some of his early books and essays. Orwell believed that writers should tell the truth about society and never ignore injustice. His journalistic work focused on politics, poverty and the struggles of ordinary people.
+
+One of the most important moments in his life was his participation in the Spanish Civil War. While fighting against fascism, Orwell witnessed propaganda, censorship and political manipulation from different sides of the conflict. These events deeply influenced his thinking and later inspired his most famous novels. His experiences taught him that freedom of speech and freedom of thought should always be protected.
+
+In 1945 Orwell published Animal Farm, a political allegory that criticized totalitarian governments through the story of farm animals. The novel quickly became a worldwide success because readers understood its deeper political meaning. Four years later he completed Nineteen Eighty-Four, often simply called 1984, a dystopian masterpiece that introduced concepts such as Big Brother, Thought Police and doublethink. The book remains one of the most influential novels ever written.
+
+Besides his novels, Orwell produced numerous essays, articles and literary reviews. His writing style was simple, clear and direct because he believed that complicated language could hide lies and manipulation. Many schools and universities continue to study his works because they remain relevant in discussions about politics, media and individual freedom.
+
+George Orwell died on 21 January 1950 from tuberculosis, but his literary legacy continues to influence millions of readers around the world. His books encourage people to question authority, defend truth and protect democracy. More than seventy years after his death, Orwell remains one of the most respected writers of modern literature.`,
+
+books:[
+"1984",
+"Animal Farm",
+"Homage to Catalonia"
+],
+
+facts:[
+"His real name was Eric Arthur Blair.",
+"He fought in the Spanish Civil War.",
+"He created famous terms such as Big Brother and Thought Police."
+],
+
+quote:"In a time of deceit, telling the truth is a revolutionary act."
+
+},
+
+"J.K Rowling":{
+
+photo:"https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+
+role:"British author, producer and philanthropist",
+
+years:"1965 - Present",
+
+country:"United Kingdom",
+
+genre:"Fantasy",
+
+biography:`Joanne Rowling, better known as J.K. Rowling, was born on 31 July 1965 in England. From an early age she loved reading books and inventing stories. As a child she often wrote short tales for her family and friends. Her passion for literature continued throughout her education and eventually inspired her dream of becoming an author.
+
+Before achieving success, Rowling worked in several different jobs and experienced many personal challenges. She lived for some time in Portugal, where she worked as an English teacher. After returning to the United Kingdom, she faced financial difficulties while raising her daughter. During this period she continued writing the story that would eventually become Harry Potter and the Philosopher's Stone.
+
+The idea for Harry Potter came to Rowling during a train journey. She imagined a young wizard discovering that he belonged to a magical world. Over the following years she developed a detailed universe filled with magical creatures, spells and unforgettable characters. The first manuscript was rejected by several publishers, but eventually a small publishing house accepted it.
+
+The Harry Potter series became one of the greatest publishing successes in history. Millions of readers around the world fell in love with the adventures of Harry, Hermione and Ron. The books were translated into many languages and adapted into blockbuster films. Rowling's magical world expanded through additional books, stage productions and other creative projects.
+
+Apart from writing, Rowling is also known for her charitable work. She has donated large amounts of money to organizations that support children, education and medical research. She often speaks about the importance of imagination, kindness and determination. Her personal journey from struggling writer to world-famous author has inspired many people to follow their dreams despite difficulties.
+
+Today J.K. Rowling remains one of the best-known authors in the world. Her stories introduced a new generation to reading and created one of the largest fan communities in literary history. Her influence extends far beyond books, making her one of the most significant cultural figures of modern times.`,
+
+books:[
+"Harry Potter and the Philosopher's Stone",
+"Harry Potter and the Chamber of Secrets",
+"Harry Potter and the Prisoner of Azkaban"
+],
+
+facts:[
+"The idea for Harry Potter came during a train journey.",
+"The first book was rejected by several publishers.",
+"The Harry Potter series has sold hundreds of millions of copies."
+],
+
+quote:"It is our choices that show what we truly are, far more than our abilities."
+
+},
+
+"Tolkien":{
+
+photo:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
+
+role:"English writer, philologist and university professor",
+
+years:"1892 - 1973",
+
+country:"United Kingdom",
+
+genre:"High Fantasy",
+
+biography:`John Ronald Reuel Tolkien was born on 3 January 1892 in South Africa, but after the death of his father his family moved to England. As a child Tolkien developed a fascination with languages, myths and ancient legends. He spent many hours studying words and even creating his own imaginary languages. These interests would later become the foundation of his literary career.
+
+Tolkien studied at Oxford University, where he focused on languages and literature. During the First World War he served in the British Army and experienced the horrors of battle. Many scholars believe that his experiences during the war influenced themes of friendship, courage and sacrifice found in his books.
+
+After the war Tolkien returned to academic life and became a professor at Oxford University. He specialized in Old and Middle English and was respected for his research. At the same time he continued creating the fictional world of Middle-earth. Unlike many writers, Tolkien designed complete histories, cultures, maps and languages for his imaginary world long before publishing his novels.
+
+In 1937 he published The Hobbit, a fantasy adventure that quickly became popular among readers. Encouraged by its success, Tolkien spent many years writing The Lord of the Rings. The trilogy became one of the greatest achievements in fantasy literature and introduced unforgettable characters such as Frodo, Gandalf and Aragorn. Later, his son Christopher Tolkien edited and published The Silmarillion, expanding the mythology of Middle-earth.
+
+Tolkien's imagination was extraordinary because he created entire civilizations with their own traditions and languages. His work inspired countless authors, filmmakers and game developers. Many elements of modern fantasy literature can be traced back to Tolkien's ideas and storytelling methods.
+
+John Ronald Reuel Tolkien died on 2 September 1973, but his influence remains enormous. His books continue to be translated into many languages and are loved by readers of all ages. The world of Middle-earth has become one of the most famous fictional universes ever created and ensures that Tolkien's legacy will live for generations.`,
+
+books:[
+"The Hobbit",
+"The Lord of the Rings",
+"The Silmarillion"
+],
+
+facts:[
+"He was a professor at Oxford University.",
+"He created several complete fictional languages.",
+"He is considered the father of modern fantasy literature."
+],
+
+quote:"Not all those who wander are lost."
+
+}
+
+};
+
+const params=new URLSearchParams(window.location.search);
+const currentAuthor=params.get("name");
+const author=authors[currentAuthor];
+
+if(author){
+
+document.getElementById("author-photo").src = author.photo;
+
+document.getElementById("author-name").innerText = currentAuthor;
+document.getElementById("author-role").innerText = author.role;
+document.getElementById("author-years").innerText = author.years;
+document.getElementById("author-country").innerText = author.country;
+document.getElementById("author-genre").innerText = author.genre;
+document.getElementById("author-biography").innerText = author.biography;
+
+document.getElementById("book-one").innerText = author.books[0];
+document.getElementById("book-two").innerText = author.books[1];
+document.getElementById("book-three").innerText = author.books[2];
+
+document.getElementById("fact-one").innerText = author.facts[0];
+document.getElementById("fact-two").innerText = author.facts[1];
+document.getElementById("fact-three").innerText = author.facts[2];
+
+document.getElementById("author-quote").innerText = author.quote;
+
+}
+}
+
+
+
+const joinChallengeBtn=document.getElementById("join-challenge-btn");
+
+if(joinChallengeBtn){
+
+joinChallengeBtn.addEventListener("click",()=>{
+alert("Welcome to the BookVerse Reading Challenge!");
+});
+
+let booksRead=localStorage.getItem("booksRead");
+
+if(!booksRead){
+booksRead=0;
+}
+
+const booksCounter=document.getElementById("books-read");
+
+function updateBooks(){
+booksCounter.innerText=booksRead+" / 50";
+}
+
+updateBooks();
+
+document.getElementById("add-book-btn")
+.addEventListener("click",()=>{
+
+if(booksRead<50){
+booksRead++;
+localStorage.setItem("booksRead",booksRead);
+updateBooks();
+}
+
+});
+
+const quests=[
+"Read 30 pages today.",
+"Read a fantasy book.",
+"Discover a new author.",
+"Read before bedtime.",
+"Finish one chapter.",
+"Read a classic novel.",
+"Read for one hour.",
+"Start a science fiction book."
+];
+
+document.getElementById("new-quest-btn")
+.addEventListener("click",()=>{
+
+const random=
+Math.floor(Math.random()*quests.length);
+
+document.getElementById("daily-quest")
+.innerText=quests[random];
+
+});
+
+const books=[
+"1984",
+"The Hobbit",
+"Dune",
+"Harry Potter",
+"Sapiens",
+"Atomic Habits",
+"The Midnight Library",
+"Project Hail Mary"
+];
+
+document.getElementById("fortune-btn")
+.addEventListener("click",()=>{
+
+const random=
+Math.floor(Math.random()*books.length);
+
+document.getElementById("fortune-book")
+.innerText=books[random];
+
+});
+
+}
+
+
+const premiumBtn =
+document.getElementById("premium-btn");
+
+if(premiumBtn){
+
+premiumBtn.addEventListener("click",()=>{
+
+alert(
+"Congratulations! Welcome to BookVerse Premium!"
+);
+
+});
+
+const premiumBooks=[
+"Dune",
+"Sapiens",
+"The Midnight Library",
+"Project Hail Mary",
+"Atomic Habits",
+"1984",
+"The Hobbit"
+];
+
+document.getElementById("premium-book-btn")
+.addEventListener("click",()=>{
+
+const random=
+Math.floor(
+Math.random()*premiumBooks.length
+);
+
+document.getElementById("premium-book")
+.innerText=
+premiumBooks[random];
+
+});
+
+}
+
+
+function showPartner(name){
+
+const partners={
+
+penguin:{
+title:"Penguin Random House",
+description:"Penguin Random House is one of the world's largest publishing companies. It works with thousands of authors and publishes bestselling books across many genres.",
+founded:"2013",
+country:"United States"
+},
+
+oxford:{
+title:"Oxford University Press",
+description:"Oxford University Press is one of the oldest and most respected academic publishers. It is famous for educational books and dictionaries.",
+founded:"1586",
+country:"United Kingdom"
+},
+
+amazon:{
+title:"Amazon Books",
+description:"Amazon Books helps readers discover and buy millions of books around the world while supporting digital reading technologies.",
+founded:"1994",
+country:"United States"
+},
+
+harper:{
+title:"HarperCollins",
+description:"HarperCollins is an international publishing company with a long literary history and a large collection of bestselling books.",
+founded:"1989",
+country:"United States"
+}
+
+};
+
+const partner=partners[name];
+
+document.getElementById("partner-title").innerText=
+partner.title;
+
+document.getElementById("partner-description").innerText=
+partner.description;
+
+document.getElementById("partner-founded").innerText=
+partner.founded;
+
+document.getElementById("partner-country").innerText=
+partner.country;
+
+}
+
+
+const buyGiftBtn=
+document.getElementById("buy-gift-btn");
+
+if(buyGiftBtn){
+
+buyGiftBtn.addEventListener("click",()=>{
+
+const name=
+document.getElementById("gift-name").value;
+
+if(name==""){
+
+alert("Please enter recipient name.");
+return;
+
+}
+
+alert(
+"Gift Card purchased successfully!"
+);
+
+document.getElementById("gift-name").value="";
+document.getElementById("gift-email").value="";
+document.getElementById("gift-message").value="";
+
+});
+
+}
+
