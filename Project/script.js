@@ -1024,7 +1024,7 @@ if (addBookForm) {
         renderAdminTable?.();
 
     } catch (err) {
-        const statusEl = document.getElementById("status");
+        const statusEl = document.getElementById("admin-status");
 
         if (statusEl) {
             statusEl.innerText =
@@ -1035,9 +1035,7 @@ if (addBookForm) {
 }
 
 window.addEventListener("load", () => {
-    if (document.getElementById("admin-page")) {
-        initAdmin();
-    }
+    initAdmin();
 });
        
 
