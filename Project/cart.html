@@ -37,7 +37,7 @@
                 <span>Price:</span>
                 <span style="color: #a855f7;">FREE (Premium)</span>
             </div>
-            <button class="btn-primary" onclick="alert('Order processed! Enjoy your reading.'); localStorage.removeItem('cart'); location.reload();" style="width: 100%; padding: 14px; border-radius: 8px; border: none; background: #a855f7; color: white; font-weight: bold; cursor: pointer;">
+            <button class="btn-primary" onclick="clearCart()">
                 Confirm Order
             </button>
         </div>
@@ -45,55 +45,8 @@
     </div>
 </main>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const container = document.getElementById('cart-items-container');
-        const totalCountSpan = document.getElementById('total-count');
-
-        function renderCart() {
-            totalCountSpan.innerText = cart.length;
-
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 50px; background: #1e1b4b; border-radius: 16px;">
-                        <i class="fa-solid fa-folder-open" style="font-size: 3rem; color: #64748b; margin-bottom: 15px;"></i>
-                        <p style="color: #94a3b8; margin-bottom: 20px;">Your cart is currently empty.</p>
-                        <a href="catalog.html" class="btn-primary" style="text-decoration: none; padding: 10px 20px; background: #a855f7; color: white; border-radius: 6px; font-weight: bold;">Browse Catalog</a>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = cart.map((book, index) => `
-                <div class="cart-item" style="display: flex; gap: 20px; background: #1e1b4b; padding: 20px; border-radius: 12px; align-items: center; justify-content: space-between; border: 1px solid #334155;">
-                    <div style="display: flex; gap: 20px; align-items: center;">
-                        <img src="${book.img}" alt="${book.title}" style="width: 70px; height: 100px; object-fit: cover; border-radius: 6px;">
-                        <div>
-                            <h3 style="margin: 0 0 5px 0;">${book.title}</h3>
-                            <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">by ${book.author}</p>
-                            <span class="badge" style="display: inline-block; margin-top: 8px;">${book.category}</span>
-                        </div>
-                    </div>
-                    <button class="remove-from-cart-btn" data-index="${index}" style="background: none; border: none; color: #ef4444; font-size: 1.2rem; cursor: pointer; padding: 10px; transition: transform 0.2s;">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    const indexToRemove = button.getAttribute('data-index');
-                    cart.splice(indexToRemove, 1);
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    renderCart();
-                });
-            });
-        }
-
-        renderCart();
-    });
-</script>
-
+<script src = "script.js"></script>
+<script src = "cartscript.js"></script>
+ 
 </body>
 </html>

@@ -1,7 +1,8 @@
-const API_URL = "https://bookverse-project.onrender.com/books";
+//const API_URL = "https://bookverse-project.onrender.com/books";
+const API_URL = "http://localhost:8080/books";
 let booksDatabase = [];
 let currentSelectedBookId = null;
-
+ const API_BASE = "http://localhost:8080";
 let authorsDatabase = [
     { name: "George Orwell", bio: "English novelist, essayist, journalist, and critic noted for his clear prose, awareness of social injustice, and opposition to totalitarianism.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e" },
     { name: "J.K Rowling", bio: "British author, philanthropist, producer, and screenwriter best known for writing the Harry Potter fantasy series.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330" },
@@ -69,15 +70,43 @@ async function updateBook(id, updatedData) {
 
  
 
-function updateCartBadge() {
-    const badge = document.getElementById('cart-global-count');
-    if (badge) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        badge.innerText = cart.length;
+ async function loadBorrowedBooks() {
+    const container = document.getElementById("cart-items-container");
+    const user = JSON.parse(sessionStorage.getItem("currentUser"));
+
+    if (!container || !user) return;
+
+    try {
+        const res = await fetch(`${API_BASE}/borrow/user/${user.id}`);
+        const data = await res.json();
+        updateCartUI(data);
+        console.log("BORROWED DATA:", data); 
+
+        container.innerHTML = "";
+
+        data.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "borrowed-item";
+
+    div.innerHTML = `
+        <img src="${item.image}" style="width:50px;height:70px;object-fit:cover;border-radius:6px;">
+        
+        <div style="flex:1; margin-left:10px;">
+            <h4>${item.title}</h4>
+            <p>${item.author}</p>
+            <small>${item.borrowDate}</small>
+        </div>
+
+        <button onclick="deleteBorrow(${item.id})">Remove</button>
+    `;
+
+    container.appendChild(div);
+});
+
+    } catch (err) {
+        console.error("Load borrow error:", err);
     }
 }
-
- 
 
 function renderAllGrids() {
     const featuredGrid    = document.getElementById("featured-books-grid");
@@ -118,7 +147,17 @@ function renderAllGrids() {
         if (authorsGrid) authorsGrid.appendChild(card);
     });
 }
+async function updateCartBadge() {
+    const badge = document.getElementById("cart-global-count");
+    const user = JSON.parse(sessionStorage.getItem("currentUser"));
 
+    if (!badge || !user) return;
+
+    const res = await fetch(`${API_BASE}/borrow/user/${user.id}`);
+    const data = await res.json();
+
+    badge.innerText = data.length;
+}
  
 
 function setupModal(openId, modalId, closeId) {
@@ -223,32 +262,73 @@ function openDetailsModal(bookId) {
 function openAuthorModal(authorName) {
     window.location.href = `author.html?name=${encodeURIComponent(authorName)}`;
 }
+async function clearCart() {
+    const user = JSON.parse(sessionStorage.getItem("currentUser"));
+    if (!user) return;
 
+    try {
+        const res = await fetch(`${API_BASE}/borrow/user/${user.id}`);
+        const data = await res.json();
+ 
+        for (const item of data) {
+            await fetch(`${API_BASE}/borrow/${item.id}`, {
+                method: "DELETE"
+            });
+        }
+        await loadBorrowedBooks();
+        alert("Order processed! Enjoy your reading.");
+  
+
+    } catch (err) {
+        console.error("Clear cart error:", err);
+        alert("Failed to clear cart");
+    }
+}
  
 document.addEventListener("DOMContentLoaded", () => {
-    loadBooks();
-    updateCartBadge();
+    loadBooks(); 
+const borrowBtn = document.getElementById("add-to-cart-modal-btn");
  
-    const addToCartModalBtn = document.getElementById('add-to-cart-modal-btn');
-    if (addToCartModalBtn) {
-        addToCartModalBtn.onclick = function () {
-            if (!currentSelectedBookId) return;
-            const targetBook = booksDatabase.find(b => b.id === currentSelectedBookId);
-            if (!targetBook) return;
+if (borrowBtn) {
+    borrowBtn.onclick = async () => {
 
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if (cart.some(item => item.id === targetBook.id)) {
-                alert(`"${targetBook.title}" is already in your cart!`);
-            } else {
-                cart.push(targetBook);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartBadge();
-                alert(`"${targetBook.title}" successfully added to your cart!`);
-            }
-            document.getElementById("details-book-modal").classList.remove("active");
-        };
+    const user = JSON.parse(sessionStorage.getItem("currentUser"));
+
+    if (!user) {
+        window.location.href = "auth.html";
+        return;
     }
- 
+
+    const book = booksDatabase.find(b => b.id === currentSelectedBookId);
+    if (!book) return;
+
+    const alreadyBorrowed = await isBookBorrowed(user.id, book.id);
+
+    if (alreadyBorrowed) {
+        alert("Already in cart");
+        return;
+    }
+
+    try {
+        await fetch("http://localhost:8080/borrow", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                userId: user.id,
+                bookId: book.id
+            })
+        });
+
+        alert("Added to cart!");
+
+        await loadBorrowedBooks();
+        await updateCartBadge();
+
+    } catch (e) {
+         console.error("backend borrow failed:", e.message);
+    }
+};
+}
     const searchInput = document.getElementById("global-search");
     if (searchInput) {
         searchInput.addEventListener("input", function (e) {
@@ -353,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (wishlistBtn) wishlistBtn.onclick = () => alert("Wishlist system active! Book saved.");
 
     const cartBtn = document.getElementById("cart-btn");
-    if (cartBtn) cartBtn.onclick = () => alert("Cart status updated.");
+    
 
     const newsBtn = document.querySelector(".newsletter button");
     if (newsBtn) newsBtn.onclick = () => alert("Subscription complete!");
@@ -733,3 +813,284 @@ document.getElementById("gift-message").value="";
 
 }
 
+
+// admin script 
+ const tableBody = document.getElementById("admin-database-table");
+        const statusEl  = document.getElementById("admin-status");
+
+        function renderAdminTable() {
+            tableBody.innerHTML = "";
+            statusEl.innerText  = `${booksDatabase.length} book(s) in database`;
+
+            booksDatabase.forEach(book => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td><img src="${book.image || book.img || ''}" alt="" style="width:40px; height:60px; object-fit:cover; border-radius:4px;"></td>
+                    <td style="font-weight:bold; color:white;">${book.title}</td>
+                    <td>${book.author}</td>
+                    <td><span style="background:rgba(168,85,247,0.1); color:#a855f7; padding:4px 10px; border-radius:12px; font-size:13px;">${book.category}</span></td>
+                    <td><span style="color:#aaa; font-size:13px;">${book.type || 'new'}</span></td>
+                    <td>
+                        <button class="action-btn-edit"   onclick="openEditModal(${book.id})"><i class="fa-solid fa-pen"></i></button>
+                        <button class="action-btn-delete" onclick="deleteBookAdmin(${book.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function deleteBookAdmin(id) {
+            if (!confirm("Delete this book?")) return;
+            try {
+                await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+                booksDatabase = booksDatabase.filter(b => b.id !== id);
+                renderAdminTable();
+            } catch (err) {
+                alert("Delete failed: " + err.message);
+            }
+        }
+
+        function openEditModal(id) {
+            const book = booksDatabase.find(b => b.id === id);
+            if (!book) return;
+
+            document.getElementById("edit-id").value          = book.id;
+            document.getElementById("edit-title").value       = book.title;
+            document.getElementById("edit-author").value      = book.author;
+            document.getElementById("edit-image").value       = book.image || book.img || "";
+            document.getElementById("edit-category").value    = book.category;
+            document.getElementById("edit-type").value        = book.type || "new";
+            document.getElementById("edit-description").value = book.description || "";
+
+            document.getElementById("edit-book-modal").classList.add("active");
+        }
+
+        const closeEditModalBtn = document.getElementById("close-edit-modal");
+
+        if (closeEditModalBtn) {
+            closeEditModalBtn.addEventListener("click", () => {
+                const modal = document.getElementById("edit-book-modal");
+                if (modal) modal.classList.remove("active");
+            });
+        }   
+
+       const editForm = document.getElementById("edit-book-form");
+
+if (editForm) {
+    editForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const id = document.getElementById("edit-id").value;
+
+        const updatedBook = {
+            title: document.getElementById("edit-title").value,
+            author: document.getElementById("edit-author").value,
+            image: document.getElementById("edit-image").value,
+            category: document.getElementById("edit-category").value,
+            type: document.getElementById("edit-type").value,
+            description: document.getElementById("edit-description").value
+        };
+
+        try {
+            const res = await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedBook)
+            });
+
+            const saved = await res.json();
+
+            const index = booksDatabase.findIndex(b => b.id == id);
+            if (index !== -1) booksDatabase[index] = saved;
+
+            document.getElementById("edit-book-modal").classList.remove("active");
+            renderAdminTable();
+
+        } catch (err) {
+            alert("Update failed: " + err.message);
+        }
+    });
+}
+
+
+
+function updateCartUI(data) {
+    const totalCountSpan = document.getElementById("total-count");
+    const container = document.getElementById("cart-items-container");
+
+    if (totalCountSpan) {
+        totalCountSpan.innerText = data.length;
+    }
+
+    if (!container) return;
+
+    if (!data.length) {
+        container.innerHTML = "<p>No borrowed books yet.</p>";
+        return;
+    }
+
+    container.innerHTML = data.map(item => `
+        <div class="cart-item" style="display:flex;gap:20px;align-items:center;padding:15px;border:1px solid #333;border-radius:10px;">
+            
+            <img src="${item.image}" style="width:50px;height:70px;object-fit:cover;border-radius:6px;">
+
+            <div style="flex:1">
+                <h4>${item.title}</h4>
+                <p>${item.author}</p>
+                <small>${item.borrowDate}</small>
+            </div>
+
+            <button class="remove-btn" data-id="${item.id}" style="color:red;border:none;background:none;cursor:pointer;">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
+    `).join("");
+ 
+    document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const id = btn.dataset.id;
+
+            await fetch(`${API_BASE}/borrow/${id}`, {
+                method: "DELETE"
+            });
+
+            await loadBorrowedBooks();
+        });
+    });
+}
+
+
+const openAddModalBtn = document.getElementById("open-add-book-modal");
+const closeAddModalBtn = document.getElementById("close-add-modal");
+const addBookModal = document.getElementById("add-book-modal");
+
+if (openAddModalBtn && addBookModal) {
+    openAddModalBtn.addEventListener("click", () => {
+        addBookModal.classList.add("active");
+    });
+}
+
+if (closeAddModalBtn && addBookModal) {
+    closeAddModalBtn.addEventListener("click", () => {
+        addBookModal.classList.remove("active");
+    });
+}
+
+
+ const addBookForm = document.getElementById("add-book-form");
+
+if (addBookForm) {
+    addBookForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const bookData = {
+            title: document.getElementById("new-title")?.value,
+            author: document.getElementById("new-author")?.value,
+            image:
+                document.getElementById("new-image")?.value.trim() ||
+                "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+            category: document.getElementById("new-category")?.value,
+            type: document.getElementById("new-type")?.value,
+            description: document.getElementById("new-description")?.value
+        };
+
+        try {
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(bookData)
+            });
+
+            const newBook = await res.json();
+
+            booksDatabase.unshift(newBook);
+
+            document.getElementById("add-book-modal")?.classList.remove("active");
+            addBookForm.reset();
+
+            renderAdminTable?.();
+
+        } catch (err) {
+            alert("Add failed: " + err.message);
+        }
+    });
+}
+
+      async function initAdmin() {
+    try {
+        const res = await fetch(API_URL);
+        booksDatabase = await res.json();
+
+        renderAdminTable?.();
+
+    } catch (err) {
+        const statusEl = document.getElementById("status");
+
+        if (statusEl) {
+            statusEl.innerText =
+                "Could not connect to backend. Is Spring Boot running?";
+            statusEl.style.color = "#ef4444";
+        }
+    }
+}
+
+window.addEventListener("load", () => {
+    if (document.getElementById("admin-page")) {
+        initAdmin();
+    }
+});
+       
+
+// cart 
+async function isBookBorrowed(userId, bookId) {
+    const res = await fetch(`${API_BASE}/borrow/user/${userId}`);
+    const data = await res.json();
+
+    return data.some(item => Number(item.bookId) === Number(bookId));
+}
+document.addEventListener("DOMContentLoaded", () => {
+  
+     
+
+    async function borrowBook(bookId) {
+        const user = JSON.parse(sessionStorage.getItem("currentUser"));
+
+        if (!user) {
+            window.location.href = "auth.html";
+            return;
+        }
+
+        try {
+            await fetch(`${API_BASE}/borrow`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userId: user.id,
+                    bookId: bookId
+                })
+            });
+
+            await updateCartBadge();
+            await loadBorrowedBooks();
+
+            alert("Book added!");
+        } catch (err) {
+            console.error("Borrow error:", err);
+        }
+    }
+
+async function deleteBorrow(id) {
+    await fetch(`${API_BASE}/borrow/${id}`, {
+        method: "DELETE"
+    });
+
+    await loadBorrowedBooks();
+    await updateCartBadge();
+}
+ 
+    window.borrowBook = borrowBook;
+    window.deleteBorrow = deleteBorrow;
+ 
+    updateCartBadge();
+    loadBorrowedBooks();
+});
