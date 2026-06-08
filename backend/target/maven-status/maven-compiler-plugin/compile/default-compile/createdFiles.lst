@@ -1,0 +1,11 @@
+com\example\backend\controller\BookController.class
+com\example\backend\controller\UserController.class
+com\example\backend\BackendApplication.class
+com\example\backend\repository\BorrowedBookRepository.class
+com\example\backend\dataseeder\DataSeeder.class
+com\example\backend\model\User.class
+com\example\backend\repository\UserRepository.class
+com\example\backend\errorhandler\errorhandler.class
+com\example\backend\model\Book.class
+com\example\backend\model\BorrowedBook.class
+com\example\backend\repository\BookRepository.class
