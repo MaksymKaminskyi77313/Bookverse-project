@@ -1,7 +1,7 @@
   // auth
-//const AUTH_API = "https://bookverse-project.onrender.com/users";
+const AUTH_API = "https://bookverse-project.onrender.com/users";
  
-const AUTH_API = "http://localhost:8080/users";
+//const AUTH_API = "http://localhost:8080/users";
     const tabLogin    = document.getElementById('tab-login');
     const tabRegister = document.getElementById('tab-register');
     const loginForm   = document.getElementById('page-login-form');

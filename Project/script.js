@@ -1,8 +1,8 @@
-//const API_URL = "https://bookverse-project.onrender.com/books";
-const API_URL = "http://localhost:8080/books";
+const API_URL = "https://bookverse-project.onrender.com/books";
+//const API_URL = "http://localhost:8080/books";
 let booksDatabase = [];
 let currentSelectedBookId = null;
- const API_BASE = "http://localhost:8080";
+ const API_BASE = "https://bookverse-project.onrender.com";
 let authorsDatabase = [
     { name: "George Orwell", bio: "English novelist, essayist, journalist, and critic noted for his clear prose, awareness of social injustice, and opposition to totalitarianism.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e" },
     { name: "J.K Rowling", bio: "British author, philanthropist, producer, and screenwriter best known for writing the Harry Potter fantasy series.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330" },
@@ -310,7 +310,7 @@ if (borrowBtn) {
     }
 
     try {
-        await fetch("http://localhost:8080/borrow", {
+        await fetch("https://bookverse-project.onrender.com/borrow", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalCountSpan = document.getElementById("total-count");
 
     const user = JSON.parse(sessionStorage.getItem("currentUser"));
-    const API_BASE = "http://localhost:8080";
+    const API_BASE = "https://bookverse-project.onrender.com";
 
     if (!container || !totalCountSpan) return;
 
