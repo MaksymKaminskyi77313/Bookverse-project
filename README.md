@@ -12,6 +12,25 @@ BookVerse to aplikacja webowa typu full-stack inspirowana popularnymi serwisami 
 
 Aplikacja działa w architekturze klient-serwer: frontend stworzono w czystym HTML, CSS i JavaScript, backend oparto na frameworku Spring Boot (Java), a dane przechowywane są w relacyjnej bazie PostgreSQL.
 
+## Wykorzystane technologie
+
+Frontend:
+* HTML 
+* CSS
+* JavaScript 
+
+Backend:
+* Java 21
+* Spring Boot
+* Maven
+
+Baza danych:
+* PostgreSQL (Neon)
+
+Hosting:
+* Vercel
+* Render
+
 ## Endpointy do sprawdzenia
 Aplikacja komunikuje się poprzez REST API. Główne endpointy to:
 
@@ -26,8 +45,8 @@ Użytkownicy i Autentykacja ('/users')
 * 'POST /users/login' – autentykacja i logowanie (zapis sesji w Session Storage)
 * 'GET /users' – pobranie listy zarejestrowanych użytkowników
 
-Wypożyczenia i Koszyk ('/borrow')
-* 'POST /borrow' – dodanie książki do koszyka / wypożyczenie
+Koszyk ('/borrow')
+* 'POST /borrow' – dodanie książki do koszyka 
 * 'GET /borrow/user/{userId}' – pobranie listy książek przypisanych do konkretnego użytkownika
 * 'DELETE /borrow/{id}' – zwrot książki lub usunięcie jej z listy
 
@@ -51,8 +70,8 @@ Wypożyczenia i Koszyk ('/borrow')
 
 ## Publiczne wdrożenia
 Aplikacja została w pełni wdrożona w chmurze i jest dostępna pod poniższymi adresami:
-* **Frontend:** https://twoj-frontend.vercel.app (Wdrożone na platformie Vercel)
-* **Backend:** https://twoj-backend.onrender.com (Wdrożone na platformie Render)
+* **Frontend:** [https://bookverseproject-alpha.vercel.app/](https://bookverseproject-alpha.vercel.app/)
+* **Backend:** [https://twoj-backend.onrender.com ](https://bookverse-project.onrender.com)
 
 ## Lista sprawdzonych platform
 * **Vercel** – hosting frontendu i automatyczny deployment z GitHuba.
@@ -80,12 +99,10 @@ Aplikacja została w pełni wdrożona w chmurze i jest dostępna pod poniższymi
 * **Sposób budowania projektu:** Projekt jest budowany i zarządzany za pomocą narzędzia Maven. W środowisku produkcyjnym aplikacja budowana jest automatycznie ze źródeł z wykorzystaniem polecenia:
   ./mvnw clean package
 * **Port aplikacji:** Lokalnie backend działa na porcie 8080. Przy wdrożeniu na Renderze aplikacja musiała zostać zmodyfikowana tak, aby dynamicznie bindować port przekazywany przez zmienną środowiskową 'PORT' ustawianą przez platformę hostingową.
-* **Plik JAR:** Końcowym produktem budowania backendu jest spakowany plik '.jar', którego poprawne uruchomienie na serwerze wymagało zdefiniowania właściwej komendy startowej w panelu Render.
 * **Zmienne środowiskowe:** Bezpieczeństwo danych wymagało ukrycia wrażliwych danych dostępowych do bazy Neon PostgreSQL. Wszystkie dane uwierzytelniające (URL bazy, login, hasło) zostały skonfigurowane jako zmienne środowiskowe bezpośrednio w panelu administracyjnym Render, dzięki czemu nie są hardkodowane w kodzie źródłowym.
 * **Logi:** Podczas pierwszych prób wdrożenia napotkano błędy połączenia z bazą oraz błędy CORS. Do ich zdiagnozowania i wyeliminowania kluczowe okazało się bieżące analizowanie logów konsoli (Live Logs) udostępnianych przez platformę Render.
-* **Czas startu aplikacji:** Zbudowana aplikacja Spring Boot uruchamia się na serwerze w ciągu około kilkunastu sekund, co pozwala na sprawną obsługę ruchu po jej zainicjowaniu.
 * **Usypianie aplikacji w darmowej wersji:** Z racji korzystania z darmowego planu (Free Tier) na platformie Render, aplikacja przechodzi w stan uśpienia (spin down) po 15 minutach braku aktywności. Skutkuje to tym, że pierwsze zapytanie wysłane do API po dłuższej przerwie wymaga odczekania około 50 sekund na ponowne wybudzenie kontenera.
-* **Wymaganie karty płatniczej:** Podczas konfiguracji usług chmurowych (szczególnie przy próbach weryfikacji na niektórych platformach), integracja wymagała przejścia autoryzacji konta, co w przypadku chęci rozszerzenia niektórych usług wiąże się z koniecznością podpięcia karty płatniczej, nawet dla planów darmowych o zwiększonych limitach.
+
 
 ## Wnioski
 * **Najłatwiejsza platforma:** **Vercel**. Proces wdrożenia frontendu napisanego w JavaScripcie był niezwykle prosty, w pełni zautomatyzowany i sprowadzał się do podpięcia repozytorium GitHub. Platforma sama rozpoznaje strukturę i błyskawicznie serwuje pliki statyczne z darmowym certyfikatem SSL.
