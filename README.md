@@ -1,88 +1,93 @@
-# Bookverse-project
-O projekcie:
-BookVerse to aplikacja internetowa inspirowana popularnymi platformami dla miłośników literatury (takimi jak Lubimyczytać). Projekt powstał w ramach przedmiotu "Wprowadzenie do technologii internetowych" i jest kompletnym rozwiązaniem full-stack. Prezentuje nowoczesny frontend, integrację z bazą danych przez API, system uwierzytelniania użytkowników oraz panel administracyjny.
+# Dokumentacja Projektu 
 
-BookVerse pozwala użytkownikom przeglądać katalog książek, sprawdzać szczegółowe informacje o tytułach, zarządzać własną "półką" (koszykiem czytelnika), odkrywać profile autorów oraz wchodzić w interakcję z platformą za pomocą intuicyjnego interfejsu.
+## Nazwa zespołu
+BookVerse Team
 
-Architekturza aplikacji:
- Frontend: HTML, CSS, JavaScript
- Backend: Spring Boot (Java)
- Baza danych: PostgreSQL
- Hosting: Vercel (Frontend), Render (Backend), Neon PostgreSQL (Baza danych)
- 
-Główne funkcje projektu:
+## Skład zespołu
+* Artem Hromliuk (numer studenta: 76981)
+* Maksym Kaminskyi (numer studentu: 77313)
 
-1) Katalog książek
-Użytkownicy mogą:
- 1 Przeglądać pełną listę książek, nowości, bestsellery.
- 2 Wyszukiwać książki po tytule lub autorze.
- 3 Filtrować literaturę według kategorii.
+## Krótki opis aplikacji
+BookVerse to aplikacja webowa typu full-stack inspirowana popularnymi serwisami do katalogowania książek (takimi jak Lubimyczytać). Platforma umożliwia rejestrację i logowanie użytkowników, przeglądanie responsywnego katalogu książek, sprawdzanie szczegółowych informacji w oknach modalnych oraz zarządzanie własną 'półką' (koszykiem czytelnika). Dodatkowo zaimplementowano panel administracyjny do zarządzania bazą danych (dodawanie, edycja, usuwanie książek) oraz elementy grywalizacji, takie jak wyzwania czytelnicze i generatory misji.
 
-Każda karta książki zawiera: tytuł, autora, okładkę, kategorię, opis oraz przypisany typ (np. Bestseller). 
+Aplikacja działa w architekturze klient-serwer: frontend stworzono w czystym HTML, CSS i JavaScript, backend oparto na frameworku Spring Boot (Java), a dane przechowywane są w relacyjnej bazie PostgreSQL.
 
-Szczegóły książki:
-Kliknięcie w daną pozycję otwiera okienko ze szczegółami, które zawiera:
- Pełny opis, recenzje użytkowników oraz średnią ocenę.
- Możliwość szybkiego dodania książki do koszyka czytelnika.
-
-Profile autorów:
-Dedykowane podstrony twórców zawierają biografię, zdjęcie, lata życia, narodowość, gatunek literacki, najpopularniejsze dzieła, ciekawostki oraz cytaty. Aktualnie w bazie znajdują się:
-George Orwell; J.K. Rowling; J.R.R. Tolkien
-
-Rejestracja i Logowanie: Tworzenie konta (imię i nazwisko, email, hasło) oraz bezpieczne logowanie.
-
-Po zalogowaniu sesja użytkownika jest zapisywana w 'Session Storage'.
-Użytkownik może przeglądać książki, dodawać je do koszyka i zarządzać wypożyczonymi pozycjami.
-
-Koszyk czytelnika (System wypożyczeń)
-Użytkownik może kompletować swoją listę lektur. Sekcja ta automatycznie aktualizuje licznik i wyświetla szczegóły: okładkę, tytuł, autora oraz datę wypożyczenia. Z tego poziomu można również usuwać książki lub potwierdzić zamówienie.
-
-System recenzji:
-Możliwość wystawiania ocen (w skali 1–5 gwiazdek) oraz pisania opinii. Aplikacja na bieżąco przelicza i wyświetla średnią ocen oraz łączną liczbę recenzji dla każdej książki.
-
-Dodatkowe smaczki i grywalizacja
-
-Wyzwanie czytelnicze (Reading Challenge): Dołącz do wyzwania, śledź swoje postępy i licznik przeczytanych książek.
-
-Generator Książkowego Przeznaczenia: Losuje dla Ciebie książkę z katalogu, gdy nie wiesz, po co sięgnąć.
-
-Strefa Premium: Dostęp do ekskluzywnych rekomendacji dla wymagających czytelników.
-Newsletter: Możliwość zapisania się na listę mailingową.
-
-
-Architektura bazy danych (PostgreSQL)
-Baza danych przechowuje informacje o trzech głównych encjach:
-
- 1. Books (Książki)
-'id' 'title' 'author' 'image' 'category' 'description' 'type'
-
- 2. Users (Użytkownicy)
-'id' 'fullName' 'email' 'password' 'role'
-
- 3. Borrowed Books (Wypożyczone książki)
-'id' 'userId' 'bookId' 'borrowDate'
-
-
-REST API (Główne endpointy):
+## Endpointy do sprawdzenia
+Aplikacja komunikuje się poprzez REST API. Główne endpointy to:
 
 Książki ('/books')
-'GET /books' – Pobranie wszystkich książek
-'POST /books' – Dodanie nowej książki (Admin)
-'PUT /books/{id}' – Edycja książki (Admin)
-'DELETE /books/{id}' – Usunięcie książki (Admin)
+* 'GET /books' – pobranie pełnej listy książek
+* 'POST /books' – dodanie nowej książki (wymaga roli Admin)
+* 'PUT /books/{id}' – edycja istniejącej książki (Admin)
+* 'DELETE /books/{id}' – usunięcie książki z bazy (Admin)
 
-Użytkownicy ('/users')
-'POST /users/register' – Rejestracja nowego konta
-'POST /users/login' – Logowanie do aplikacji
-'GET /users' – Pobranie listy użytkowników
+Użytkownicy i Autentykacja ('/users')
+* 'POST /users/register' – rejestracja nowego konta użytkownika
+* 'POST /users/login' – autentykacja i logowanie (zapis sesji w Session Storage)
+* 'GET /users' – pobranie listy zarejestrowanych użytkowników
 
-Wypożyczenia ('/borrow')
-'POST /borrow' – Wypożyczenie książki
-'GET /borrow/user/{userId}' – Pobranie wypożyczeń danego użytkownika
-'DELETE /borrow/{id}' – Zwrot/usunięcie książki z listy
+Wypożyczenia i Koszyk ('/borrow')
+* 'POST /borrow' – dodanie książki do koszyka / wypożyczenie
+* 'GET /borrow/user/{userId}' – pobranie listy książek przypisanych do konkretnego użytkownika
+* 'DELETE /borrow/{id}' – zwrot książki lub usunięcie jej z listy
 
-Autorzy:
+## Instrukcja uruchomienia lokalnego
 
-Projekt został zrealizowany wspólnie przez zespół w składzie:
-Artem Hromliuk (numer studentu: 76981)
-Maksym Kaminskyi (numer studentu: 77313)
+### Backend (Spring Boot)
+1. Sklonować repozytorium projektu.
+2. Przejść do katalogu 'backend'.
+3. Skonfigurować połączenie z bazą danych w pliku 'application.properties' (lub ustawić odpowiednie zmienne środowiskowe dla bazy PostgreSQL).
+4. Uruchomić aplikację za pomocą Maven Wrapper:
+   ./mvnw spring-boot:run
+5. Backend uruchomi się domyślnie na porcie 8080.
+
+### Frontend (Vite / Vanilla JS)
+1. Przejść do katalogu 'frontend'.
+2. Zainstalować wymagane zależności:
+   npm install
+3. Uruchomić serwer deweloperski:
+   npm run dev
+4. Frontend uruchomi się lokalnie na porcie 5173.
+
+## Publiczne wdrożenia
+Aplikacja została w pełni wdrożona w chmurze i jest dostępna pod poniższymi adresami:
+* **Frontend:** https://twoj-frontend.vercel.app (Wdrożone na platformie Vercel)
+* **Backend:** https://twoj-backend.onrender.com (Wdrożone na platformie Render)
+
+## Lista sprawdzonych platform
+* **Vercel** – hosting frontendu i automatyczny deployment z GitHuba.
+* **Render** – hosting aplikacji backendowej w Spring Boot.
+* **Neon Database** – chmurowa, bezserwerowa baza danych PostgreSQL.
+
+## Co udało się zrealizować
+* Pełny system rejestracji i bezpiecznego logowania użytkowników z obsługą ról (User / Admin).
+* Zarządzanie sesją użytkownika po stronie frontendu przy użyciu 'Session Storage'.
+* Integracja backendu z chmurową relacyjną bazą danych PostgreSQL (Neon) za pomocą Spring Data JPA i Hibernate.
+* Kompletny moduł CRUD dla książek zarządzany z poziomu dynamicznego Panelu Administratora.
+* Dynamiczny koszyk czytelnika obsługujący system wypożyczeń i automatyczne aktualizowanie liczników.
+* Interaktywny interfejs użytkownika z obsługą trybów Dark Mode / Light Mode, systemem recenzji oraz dodatkami (Reading Challenge, Generator Przeznaczenia).
+* Stabilne publiczne wdrożenie obu warstw aplikacji oraz zapewnienie poprawnej komunikacji CORS między frontendem na Vercel a backendem na Render.
+
+## Co nie udało się zrealizować / Plany na przyszłość
+* Trwałe zapisywanie recenzji i ocen użytkowników bezpośrednio w bazie danych (obecnie działają w obrębie stanu aplikacji).
+* Możliwość dodawania komentarzy pod recenzjami innych czytelników.
+* Zaawansowany system wyszukiwania pełnotekstowego (full-text search) oraz paginacja wyników przy dużych zbiorach danych.
+* System rekomendacji książek oparty na zaawansowanych algorytmach preferencji użytkownika.
+
+## Problemy napotkane podczas wdrożenia i konfiguracji
+
+* **Wersja Javy:** Backend produkcyjny został napisany i wymaga do działania środowiska Java 21. Konieczne było jawne wskazanie wersji środowiska uruchomieniowego w konfiguracji usług platformy Render, aby uniknąć błędów kompilacji (wybór odpowiedniego Dockerfile lub natywnego środowiska Render).
+* **Sposób budowania projektu:** Projekt jest budowany i zarządzany za pomocą narzędzia Maven. W środowisku produkcyjnym aplikacja budowana jest automatycznie ze źródeł z wykorzystaniem polecenia:
+  ./mvnw clean package
+* **Port aplikacji:** Lokalnie backend działa na porcie 8080. Przy wdrożeniu na Renderze aplikacja musiała zostać zmodyfikowana tak, aby dynamicznie bindować port przekazywany przez zmienną środowiskową 'PORT' ustawianą przez platformę hostingową.
+* **Plik JAR:** Końcowym produktem budowania backendu jest spakowany plik '.jar', którego poprawne uruchomienie na serwerze wymagało zdefiniowania właściwej komendy startowej w panelu Render.
+* **Zmienne środowiskowe:** Bezpieczeństwo danych wymagało ukrycia wrażliwych danych dostępowych do bazy Neon PostgreSQL. Wszystkie dane uwierzytelniające (URL bazy, login, hasło) zostały skonfigurowane jako zmienne środowiskowe bezpośrednio w panelu administracyjnym Render, dzięki czemu nie są hardkodowane w kodzie źródłowym.
+* **Logi:** Podczas pierwszych prób wdrożenia napotkano błędy połączenia z bazą oraz błędy CORS. Do ich zdiagnozowania i wyeliminowania kluczowe okazało się bieżące analizowanie logów konsoli (Live Logs) udostępnianych przez platformę Render.
+* **Czas startu aplikacji:** Zbudowana aplikacja Spring Boot uruchamia się na serwerze w ciągu około kilkunastu sekund, co pozwala na sprawną obsługę ruchu po jej zainicjowaniu.
+* **Usypianie aplikacji w darmowej wersji:** Z racji korzystania z darmowego planu (Free Tier) na platformie Render, aplikacja przechodzi w stan uśpienia (spin down) po 15 minutach braku aktywności. Skutkuje to tym, że pierwsze zapytanie wysłane do API po dłuższej przerwie wymaga odczekania około 50 sekund na ponowne wybudzenie kontenera.
+* **Wymaganie karty płatniczej:** Podczas konfiguracji usług chmurowych (szczególnie przy próbach weryfikacji na niektórych platformach), integracja wymagała przejścia autoryzacji konta, co w przypadku chęci rozszerzenia niektórych usług wiąże się z koniecznością podpięcia karty płatniczej, nawet dla planów darmowych o zwiększonych limitach.
+
+## Wnioski
+* **Najłatwiejsza platforma:** **Vercel**. Proces wdrożenia frontendu napisanego w JavaScripcie był niezwykle prosty, w pełni zautomatyzowany i sprowadzał się do podpięcia repozytorium GitHub. Platforma sama rozpoznaje strukturę i błyskawicznie serwuje pliki statyczne z darmowym certyfikatem SSL.
+* **Najtrudniejsza platforma:** **Render**. Wdrożenie aplikacji Spring Boot wymagało znacznie większego nakładu pracy: konfiguracji odpowiedniego środowiska uruchomieniowego, zarządzania zmiennymi środowiskowymi dla bazy danych, rozwiązania problemów z mapowaniem portów oraz radzenia sobie z ograniczeniami darmowego planu (usypianie aplikacji).
+* **Baza danych:** Wybór platformy **Neon Database** do obsługi bazy PostgreSQL okazał się strzałem w dziesiątkę. Bezserwerowa architektura idealnie współgra z darmowymi narzędziami, a intuicyjny panel pozwolił na błyskawiczne wygenerowanie potrzebnych tabel i integrację ze Spring Data JPA.
