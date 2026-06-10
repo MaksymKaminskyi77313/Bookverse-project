@@ -4,9 +4,9 @@ let booksDatabase = [];
 let currentSelectedBookId = null;
  const API_BASE = "https://bookverse-project.onrender.com";
 let authorsDatabase = [
-    { name: "George Orwell", bio: "English novelist, essayist, journalist, and critic noted for his clear prose, awareness of social injustice, and opposition to totalitarianism.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e" },
-    { name: "J.K Rowling", bio: "British author, philanthropist, producer, and screenwriter best known for writing the Harry Potter fantasy series.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330" },
-    { name: "Tolkien", bio: "English writer, poet, philologist, and academic, best known as the author of the high fantasy classic works The Hobbit and The Lord of the Rings.", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d" }
+    { name: "George Orwell", bio: "English novelist, essayist, journalist, and critic noted for his clear prose, awareness of social injustice, and opposition to totalitarianism.", img: "https://upload.wikimedia.org/wikipedia/commons/8/82/George_Orwell%2C_c._1940_%2841928180381%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "J.K Rowling", bio: "British author, philanthropist, producer, and screenwriter best known for writing the Harry Potter fantasy series.", img: "https://wallpapercave.com/wp/wp3635857.jpg" },
+    { name: "Tolkien", bio: "English writer, poet, philologist, and academic, best known as the author of the high fantasy classic works The Hobbit and The Lord of the Rings.", img: "https://w0.peakpx.com/wallpaper/468/243/HD-wallpaper-j-r-r-tolkien-hobbit-lotr-silmarillion-writer.jpg" }
 ];
  
 
@@ -463,7 +463,7 @@ const authors={
 
 "George Orwell":{
 
-photo:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+photo:"https://upload.wikimedia.org/wikipedia/commons/8/82/George_Orwell%2C_c._1940_%2841928180381%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
 
 role:"English novelist, essayist, journalist and literary critic",
 
@@ -503,7 +503,7 @@ quote:"In a time of deceit, telling the truth is a revolutionary act."
 
 "J.K Rowling":{
 
-photo:"https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+photo:"https://wallpapercave.com/wp/wp3635857.jpg",
 
 role:"British author, producer and philanthropist",
 
@@ -543,7 +543,7 @@ quote:"It is our choices that show what we truly are, far more than our abilitie
 
 "Tolkien":{
 
-photo:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
+photo:"https://w0.peakpx.com/wallpaper/468/243/HD-wallpaper-j-r-r-tolkien-hobbit-lotr-silmarillion-writer.jpg",
 
 role:"English writer, philologist and university professor",
 
