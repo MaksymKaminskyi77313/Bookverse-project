@@ -68,6 +68,30 @@ nav{
     border-radius: 6px;
 }
 
+.btnremovecart{
+  background-color: #e53e3e;
+  color: #fed7d7;
+  border: 1px solid #e53e3e;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+.btnremovecart:hover {
+  background-color: #fed7d7;
+  color: #e53e3e;
+  border-color: #fed7d7;
+}
+
+
+.btnremovecart:active {
+  transform: scale(0.97);
+}
+
 .borrow-info {
     flex: 1;
 }

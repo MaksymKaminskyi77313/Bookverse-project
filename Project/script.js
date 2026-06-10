@@ -97,7 +97,7 @@ async function updateBook(id, updatedData) {
             <small>${item.borrowDate}</small>
         </div>
 
-        <button onclick="deleteBorrow(${item.id})">Remove</button>
+        <button class="btnremovecart" onclick="deleteBorrow(${item.id})">Remove</button>
     `;
 
     container.appendChild(div);
